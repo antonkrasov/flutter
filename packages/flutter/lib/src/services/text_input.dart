@@ -806,6 +806,9 @@ abstract class TextInputClient {
   /// Requests that this client perform the given action.
   void performAction(TextInputAction action);
 
+  /// Notify client about new content insertion, like gif or PNG...
+  void commitContent(String contentUri);
+
   /// Updates the floating cursor position and state.
   void updateFloatingCursor(RawFloatingCursorPoint point);
 
@@ -1157,7 +1160,11 @@ class TextInput {
         _currentConnection._client.updateEditingValue(TextEditingValue.fromJSON(args[1] as Map<String, dynamic>));
         break;
       case 'TextInputClient.performAction':
-        _currentConnection._client.performAction(_toTextInputAction(args[1] as String));
+        if (args[1] as String == 'TextInputAction.commitContent') {
+          _currentConnection._client.commitContent(args[2] as String);
+        } else {
+          _currentConnection._client.performAction(_toTextInputAction(args[1] as String));
+        }
         break;
       case 'TextInputClient.updateFloatingCursor':
         _currentConnection._client.updateFloatingCursor(_toTextPoint(

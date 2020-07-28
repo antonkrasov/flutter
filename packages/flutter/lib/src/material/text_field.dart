@@ -334,6 +334,7 @@ class TextField extends StatefulWidget {
     this.maxLength,
     this.maxLengthEnforced = true,
     this.onChanged,
+    this.onContentCommited,
     this.onEditingComplete,
     this.onSubmitted,
     this.inputFormatters,
@@ -603,6 +604,9 @@ class TextField extends StatefulWidget {
   ///  * [onEditingComplete], [onSubmitted], [onSelectionChanged]:
   ///    which are more specialized input change notifications.
   final ValueChanged<String> onChanged;
+
+  /// Once new content is commited...
+  final ValueChanged<String> onContentCommited;
 
   /// {@macro flutter.widgets.editableText.onEditingComplete}
   final VoidCallback onEditingComplete;
@@ -1097,6 +1101,7 @@ class _TextFieldState extends State<TextField> implements TextSelectionGestureDe
         selectionColor: themeData.textSelectionColor,
         selectionControls: widget.selectionEnabled ? textSelectionControls : null,
         onChanged: widget.onChanged,
+        onContentCommited: widget.onContentCommited,
         onSelectionChanged: _handleSelectionChanged,
         onEditingComplete: widget.onEditingComplete,
         onSubmitted: widget.onSubmitted,
